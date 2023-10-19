@@ -173,7 +173,7 @@ input.btn-hide {
 	top: 100px;
 	left: 20px;
 	border-radius: 100%;
-	background-color: #b98181;
+	background-color: red;
 	-webkit-transition: background-color 300ms linear;
 	-moz-transition: background-color 300ms linear;
 	-ms-transition: background-color 300ms linear;
