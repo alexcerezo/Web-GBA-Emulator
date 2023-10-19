@@ -1,0 +1,149 @@
+<html>
+    <head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="icon" type="image/ico" href="logo.ico"/>
+		<title>Emulador GBA</title>
+		<link rel="stylesheet" href="resources/main.css" />
+		<script src="js/util.js"></script>
+		<script src="js/core.js"></script>
+		<script src="js/arm.js"></script>
+		<script src="js/thumb.js"></script>
+		<script src="js/mmu.js"></script>
+		<script src="js/io.js"></script>
+		<script src="js/audio.js"></script>
+		<script src="js/video.js"></script>
+		<script src="js/video/proxy.js"></script>
+		<script src="js/video/software.js"></script>
+		<script src="js/irq.js"></script>
+		<script src="js/keypad.js"></script>
+		<script src="js/sio.js"></script>
+		<script src="js/savedata.js"></script>
+		<script src="js/gpio.js"></script>
+		<script src="js/gba.js"></script>
+		<script src="js/main.js"></script>
+		<script src="resources/xhr.js"></script>
+		<script src="resources/biosbin.js"></script>
+    </head>
+    <body>
+        <div class="container">
+                <section id="gameinfo" class="gameinfo">
+                    <p>Los botones del simulador son los siguientes:</p>
+                    <table id="mapping">
+                        <tr>
+                            <td>Arriba</td>
+                            <td>🡱</td>
+                        </tr>
+                        <tr>
+                            <td>Abajo</td>
+                            <td>🡳</td>
+                        </tr>
+                        <tr>
+                            <td>Izquierda</td>
+                            <td>🡰</td>
+                        </tr>
+                        <tr>
+                            <td>Derecha</td>
+                            <td>🡲</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>Z</td>
+                        </tr>
+                        <tr>
+                            <td>B</td>
+                            <td>X</td>
+                        </tr>
+                        <tr>
+                            <td>L</td>
+                            <td>A</td>
+                        </tr>
+                        <tr>
+                            <td>R</td>
+                            <td>S</td>
+                        </tr>
+                        <tr>
+                            <td>Start</td>
+                            <td>Enter</td>
+                        </tr>
+                        <tr>
+                            <td>Select</td>
+                            <td>\</td>
+                        </tr>
+                    </table>
+                </section>
+                <section id="controls" class="controls">
+                    <div id="preload">
+                        <button
+                            class="bigbutton"
+                            id="select"
+                            onclick="document.getElementById('loader').click()"
+                        >
+                            Seleccionar
+                            <input
+                            class="custom-file-input"
+                            id="loader"
+                            type="file"
+                            accept=".gba"
+                            onchange="run(this.files[0]);"
+                        />
+                        </button>
+                        
+                        <button class="bigbutton" onclick="document.getElementById('saveloader').click()">
+                            Cargar partida
+                            <input
+                            class="custom-file-input"
+                            id="saveloader"
+                            type="file"
+                            onchange="uploadSavedataPending(this.files[0]);"
+                        />
+                        </button>
+                        
+                    </div>
+                    <div id="ingame" class="hidden">
+                        <button id="pause" class="bigbutton" onclick="togglePause()">
+                            Pausa
+                        </button>
+                        <button class="bigbutton" onclick="gba.downloadSavedata()">
+                            Guardar partida
+                        </button>
+                        <button class="bigbutton" onclick="fullScreen()">Pantalla Completa</button>
+                        <label id="pixelated">
+                            <input
+                                type="checkbox"
+                                onchange="setPixelated(this.checked)"
+                            />
+                            Pixelado
+                        </label>
+                        <div id="sound">
+                            <input
+                                type="checkbox"
+                                onchange="gba.audio.masterEnable = this.checked; if (gba.audio.context.state !== 'running') {gba.audio.context.resume();}"
+                            />
+                            Sonido
+                        </div>
+                    </div>
+                </section>
+        </div>
+        <div class="container-gameboy">
+            <div class="gameboy">
+                <div class="screen-cont">
+                    <div class="power"></div>
+                    <div class="screen">
+                        <div class="header">DOT MATRIX WITH STEREO SOUND</div>
+                        <div class="animated-text end">
+                        <canvas id="screen" class="game" width="480" height="320"></canvas>
+                    </div>
+                </div>
+                <div class="controls-cont">
+                    <div class="btn-direction">
+                        <div class="vertical"></div>
+                        <div class="horizontal"></div>
+                    </div>
+                    <div class="btn-AB"></div>
+                    <div class="btn-start-select"></div>
+                </div>
+                <div class="speakers"></div>
+            </div>
+        </div>
+    </body>
+</html>
